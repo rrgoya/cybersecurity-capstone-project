@@ -38,14 +38,15 @@ else
 		}
 		else
 		{
-			$username = mysql_real_escape_string($_POST['username']);
+			$username = mysqli_real_escape_string($link, $_POST['username']);
 			$password = $_POST['password'];
 		}
 		//We get the password of the user
-		$req = mysql_query('select password,id from users where username="'.$username.'"');
-		$dn = mysql_fetch_array($req);
+		$req = mysqli_query($link, 'select password,id,salt from users where username="'.$username.'"');
+		$dn = mysqli_fetch_array($req);
+		$password = hash("sha512", $dn['salt'].$password); // Hash with the salt to match database.
 		//We compare the submited password and the real one, and we check if the user exists
-		if($dn['password']==$password and mysql_num_rows($req)>0)
+		if($dn['password']==$password and mysqli_num_rows($req)>0)
 		{
 			//If the password is good, we dont show the form
 			$form = false;

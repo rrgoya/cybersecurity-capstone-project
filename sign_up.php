@@ -35,19 +35,21 @@ if(isset($_POST['username'], $_POST['password'], $_POST['passverif'], $_POST['em
 			if(preg_match('#^(([a-z0-9!\#$%&\\\'*+/=?^_`{|}~-]+\.?)*[a-z0-9!\#$%&\\\'*+/=?^_`{|}~-]+)@(([a-z0-9-_]+\.?)*[a-z0-9-_]+)\.[a-z]{2,}$#i',$_POST['email']))
 			{
 				//We protect the variables
-				$username = mysql_real_escape_string($_POST['username']);
-				$password = mysql_real_escape_string($_POST['password']);
-				$email = mysql_real_escape_string($_POST['email']);
-				$avatar = mysql_real_escape_string($_POST['avatar']);
+				$username = mysqli_real_escape_string($link, $_POST['username']);
+				$password = mysqli_real_escape_string($link, $_POST['password']);
+				$email = mysqli_real_escape_string($link, $_POST['email']);
+				$avatar = mysqli_real_escape_string($link, $_POST['avatar']);
+				$salt = (string)rand(10000,99999); // Generate a five digit salt.
+                $password = hash("sha512", $salt.$password); // Compute the hash of salt concatenated to password.
 				//We check if there is no other user using the same username
-				$dn = mysql_num_rows(mysql_query('select id from users where username="'.$username.'"'));
+				$dn = mysqli_num_rows(mysqli_query($link, 'select id from users where username="'.$username.'"'));
 				if($dn==0)
 				{
 					//We count the number of users to give an ID to this one
-					$dn2 = mysql_num_rows(mysql_query('select id from users'));
+					$dn2 = mysqli_num_rows(mysqli_query($link, 'select id from users'));
 					$id = $dn2+1;
 					//We save the informations to the databse
-					if(mysql_query('insert into users(id, username, password, email, avatar, signup_date) values ('.$id.', "'.$username.'", "'.$password.'", "'.$email.'", "'.$avatar.'", "'.time().'")'))
+					if(mysqli_query($link, 'insert into users(id, username, password, email, avatar, signup_date, salt) values ('.$id.', "'.$username.'", "'.$password.'", "'.$email.'", "'.$avatar.'", "'.time().'","'.$salt.'")'))
 					{
 						//We dont display the form
 						$form = false;

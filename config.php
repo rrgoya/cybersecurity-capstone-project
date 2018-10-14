@@ -9,8 +9,10 @@ can work correctly.
 ******************************************************/
 
 //We log to the DataBase
-mysql_connect('hote', 'username', 'password');
-mysql_select_db('database');
+$link = new mysqli('us-cdbr-iron-east-01.cleardb.net:3306', 'bcb94ff664a17f', 'c4780c9e', 'heroku_f71fa6cda1bf9f5');
+if (!$link) {
+    die('Could not connect: ' . mysql_error());
+}
 
 //Webmaster Email
 $mail_webmaster = 'example@example.com';

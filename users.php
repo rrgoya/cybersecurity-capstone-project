@@ -22,8 +22,8 @@ This is the list of members:
     </tr>
 <?php
 //We get the IDs, usernames and emails of users
-$req = mysql_query('select id, username, email from users');
-while($dnn = mysql_fetch_array($req))
+$req = mysqli_query($link, 'select id, username, email from users');
+while($dnn = mysqli_fetch_array($req))
 {
 ?>
 	<tr>
