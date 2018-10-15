@@ -37,11 +37,11 @@ if(isset($_POST['title'], $_POST['recip'], $_POST['message']))
 	if($_POST['title']!='' and $_POST['recip']!='' and $_POST['message']!='')
 	{
 		//We protect the variables
-		$title = mysql_real_escape_string($otitle);
-		$recip = mysql_real_escape_string($orecip);
-		$message = mysql_real_escape_string(nl2br(htmlentities($omessage, ENT_QUOTES, 'UTF-8')));
+		$title = mysqli_real_escape_string($link, $otitle);
+		$recip = mysqli_real_escape_string($link, $orecip);
+		$message = mysqli_real_escape_string($link, nl2br(htmlentities($omessage, ENT_QUOTES, 'UTF-8')));
 		//We check if the recipient exists
-		$dn1 = mysql_fetch_array(mysql_query('select count(id) as recip, id as recipid, (select count(*) from pm) as npm from users where username="'.$recip.'"'));
+		$dn1 = mysqli_fetch_array(mysqli_query($link, 'select count(id) as recip, id as recipid, (select count(*) from pm) as npm from users where username="'.$recip.'"'));
 		if($dn1['recip']==1)
 		{
 			//We check if the recipient is not the actual user
@@ -49,7 +49,7 @@ if(isset($_POST['title'], $_POST['recip'], $_POST['message']))
 			{
 				$id = $dn1['npm']+1;
 				//We send the message
-				if(mysql_query('insert into pm (id, id2, title, user1, user2, message, timestamp, user1read, user2read)values("'.$id.'", "1", "'.$title.'", "'.$_SESSION['userid'].'", "'.$dn1['recipid'].'", "'.$message.'", "'.time().'", "yes", "no")'))
+				if(mysqli_query($link, 'insert into pm (id, id2, title, user1, user2, message, timestamp, user1read, user2read)values("'.$id.'", "1", "'.$title.'", "'.$_SESSION['userid'].'", "'.$dn1['recipid'].'", "'.$message.'", "'.time().'", "yes", "no")'))
 				{
 ?>
 <div class="message">The message has successfully been sent.<br />

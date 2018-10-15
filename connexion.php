@@ -1,6 +1,8 @@
+<!-- Authenticate a registered user. -->
 <?php
 include('config.php');
 ?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
@@ -33,8 +35,8 @@ else
 		if(get_magic_quotes_gpc())
 		{
 			$ousername = stripslashes($_POST['username']);
-			$username = mysql_real_escape_string(stripslashes($_POST['username']));
-			$password = stripslashes($_POST['password']);
+			$username  = mysqli_real_escape_string($link, stripslashes($_POST['username']));
+			$password  = stripslashes($_POST['password']);
 		}
 		else
 		{
@@ -43,7 +45,7 @@ else
 		}
 		//We get the password of the user
 		$req = mysqli_query($link, 'select password,id,salt from users where username="'.$username.'"');
-		$dn = mysqli_fetch_array($req);
+		$dn  = mysqli_fetch_array($req);
 		$password = hash("sha512", $dn['salt'].$password); // Hash with the salt to match database.
 		//We compare the submited password and the real one, and we check if the user exists
 		if($dn['password']==$password and mysqli_num_rows($req)>0)
@@ -61,7 +63,7 @@ else
 		else
 		{
 			//Otherwise, we say the password is incorrect.
-			$form = true;
+			$form    = true;
 			$message = 'The username or password is incorrect.';
 		}
 	}

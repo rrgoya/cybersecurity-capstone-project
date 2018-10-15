@@ -8,5 +8,6 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `avatar` text NOT NULL,
-  `signup_date` int(10) NOT NULL
+  `signup_date` int(10) NOT NULL,
+  `salt` varchar(255) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

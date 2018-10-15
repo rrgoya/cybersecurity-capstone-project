@@ -19,12 +19,12 @@ if(isset($_SESSION['username']))
 {
 //We list his messages in a table
 //Two queries are executes, one for the unread messages and another for read messages
-$req1 = mysql_query('select m1.id, m1.title, m1.timestamp, count(m2.id) as reps, users.id as userid, users.username from pm as m1, pm as m2,users where ((m1.user1="'.$_SESSION['userid'].'" and m1.user1read="no" and users.id=m1.user2) or (m1.user2="'.$_SESSION['userid'].'" and m1.user2read="no" and users.id=m1.user1)) and m1.id2="1" and m2.id=m1.id group by m1.id order by m1.id desc');
-$req2 = mysql_query('select m1.id, m1.title, m1.timestamp, count(m2.id) as reps, users.id as userid, users.username from pm as m1, pm as m2,users where ((m1.user1="'.$_SESSION['userid'].'" and m1.user1read="yes" and users.id=m1.user2) or (m1.user2="'.$_SESSION['userid'].'" and m1.user2read="yes" and users.id=m1.user1)) and m1.id2="1" and m2.id=m1.id group by m1.id order by m1.id desc');
+$req1 = mysqli_query($link, 'select m1.id, m1.title, m1.timestamp, count(m2.id) as reps, users.id as userid, users.username from pm as m1, pm as m2,users where ((m1.user1="'.$_SESSION['userid'].'" and m1.user1read="no" and users.id=m1.user2) or (m1.user2="'.$_SESSION['userid'].'" and m1.user2read="no" and users.id=m1.user1)) and m1.id2="1" and m2.id=m1.id group by m1.id order by m1.id desc');
+$req2 = mysqli_query($link, 'select m1.id, m1.title, m1.timestamp, count(m2.id) as reps, users.id as userid, users.username from pm as m1, pm as m2,users where ((m1.user1="'.$_SESSION['userid'].'" and m1.user1read="yes" and users.id=m1.user2) or (m1.user2="'.$_SESSION['userid'].'" and m1.user2read="yes" and users.id=m1.user1)) and m1.id2="1" and m2.id=m1.id group by m1.id order by m1.id desc');
 ?>
 This is the list of your messages:<br />
 <a href="new_pm.php" class="link_new_pm">New PM</a><br />
-<h3>Unread Messages(<?php echo intval(mysql_num_rows($req1)); ?>):</h3>
+<h3>Unread Messages(<?php echo intval(mysqli_num_rows($req1)); ?>):</h3>
 <table>
 	<tr>
     	<th class="title_cell">Title</th>
@@ -34,7 +34,7 @@ This is the list of your messages:<br />
     </tr>
 <?php
 //We display the list of unread messages
-while($dn1 = mysql_fetch_array($req1))
+while($dn1 = mysqli_fetch_array($req1))
 {
 ?>
 	<tr>
@@ -46,7 +46,7 @@ while($dn1 = mysql_fetch_array($req1))
 <?php
 }
 //If there is no unread message we notice it
-if(intval(mysql_num_rows($req1))==0)
+if(intval(mysqli_num_rows($req1))==0)
 {
 ?>
 	<tr>
@@ -57,7 +57,7 @@ if(intval(mysql_num_rows($req1))==0)
 ?>
 </table>
 <br />
-<h3>Read Messages(<?php echo intval(mysql_num_rows($req2)); ?>):</h3>
+<h3>Read Messages(<?php echo intval(mysqli_num_rows($req2)); ?>):</h3>
 <table>
 	<tr>
     	<th class="title_cell">Title</th>
@@ -67,7 +67,7 @@ if(intval(mysql_num_rows($req1))==0)
     </tr>
 <?php
 //We display the list of read messages
-while($dn2 = mysql_fetch_array($req2))
+while($dn2 = mysqli_fetch_array($req2))
 {
 ?>
 	<tr>
@@ -79,7 +79,7 @@ while($dn2 = mysql_fetch_array($req2))
 <?php
 }
 //If there is no read message we notice it
-if(intval(mysql_num_rows($req2))==0)
+if(intval(mysqli_num_rows($req2))==0)
 {
 ?>
 	<tr>

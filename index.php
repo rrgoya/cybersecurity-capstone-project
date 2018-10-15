@@ -1,6 +1,8 @@
+<!-- Home page. App starts here. -->
 <?php
 include('config.php')
 ?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
@@ -24,7 +26,7 @@ You can <a href="users.php">see the list of users</a>.<br /><br />
 if(isset($_SESSION['username']))
 {
 //We count the number of new messages the user has
-$nb_new_pm = mysql_fetch_array(mysql_query('select count(*) as nb_new_pm from pm where ((user1="'.$_SESSION['userid'].'" and user1read="no") or (user2="'.$_SESSION['userid'].'" and user2read="no")) and id2="1"'));
+$nb_new_pm = mysqli_fetch_array(mysqli_query($link, 'select count(*) as nb_new_pm from pm where ((user1="'.$_SESSION['userid'].'" and user1read="no") or (user2="'.$_SESSION['userid'].'" and user2read="no")) and id2="1"'));
 //The number of new messages is in the variable $nb_new_pm
 $nb_new_pm = $nb_new_pm['nb_new_pm'];
 //We display the links
