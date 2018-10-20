@@ -97,6 +97,6 @@ else
 }
 ?>
 		</div>
-		<div class="foot"><a href="<?php echo $url_home; ?>">Go Home</a> - <a href="http://www.webestools.com/">Webestools</a></div>
+		<div class="foot"><a href="<?php echo $url_home; ?>">Go Home</a></div>
 	</body>
 </html>

@@ -12,4 +12,5 @@ CREATE TABLE `pm` (
   `timestamp` int(10) NOT NULL,
   `user1read` varchar(3) NOT NULL,
   `user2read` varchar(3) NOT NULL
+  `tag` varchar(255) NOT NULL,
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

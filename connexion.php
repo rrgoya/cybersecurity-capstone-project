@@ -48,8 +48,7 @@ else
 		$dn  = mysqli_fetch_array($req);
 		$password = hash("sha512", $dn['salt'].$password); // Hash with the salt to match database.
 		//We compare the submited password and the real one, and we check if the user exists
-		if($dn['password']==$password and mysqli_num_rows($req)>0)
-		{
+		if ($dn['password'] == $password and mysqli_num_rows($req)>0) {
 			//If the password is good, we dont show the form
 			$form = false;
 			//We save the user name in the session username and the user Id in the session userid
@@ -60,24 +59,17 @@ else
 <a href="<?php echo $url_home; ?>">Home</a></div>
 <?php
 		}
-		else
-		{
+		else {
 			//Otherwise, we say the password is incorrect.
 			$form    = true;
 			$message = 'The username or password is incorrect.';
 		}
 	}
-	else
-	{
-		$form = true;
-	}
-	if($form)
-	{
+	else $form = true;
+	if($form) {
 		//We display a message if necessary
-	if(isset($message))
-	{
-		echo '<div class="message">'.$message.'</div>';
-	}
+		if(isset($message)) echo '<div class="message">'.$message.'</div>';
+
 	//We display the form
 ?>
 <div class="content">
@@ -94,6 +86,6 @@ else
 	}
 }
 ?>
-		<div class="foot"><a href="<?php echo $url_home; ?>">Go Home</a> - <a href="http://www.webestools.com/">Webestools</a></div>
+		<div class="foot"><a href="<?php echo $url_home; ?>">Go Home</a></div>
 	</body>
 </html>

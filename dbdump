@@ -1,0 +1,15 @@
+<html>
+    <head>
+        <title>Database Dump</title>
+    </head>
+    <body>
+		<center>
+		<H1>
+		Database Dump
+		<BR>
+		<BR>
+		</center>
+		<H2>
+		<a href="dbdump.php">Click here to download the database</a></div>
+	</body>
+</html>
